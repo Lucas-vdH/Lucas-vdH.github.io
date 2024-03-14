@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Generic - Phantom by HTML5 UP</title>
+		<title>Portfolio - Algorithmic Trading Robot</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -21,9 +21,11 @@
 						<div class="inner">
 
 							<!-- Logo -->
+							<!--
 								<a href="index.html" class="logo">
 									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Phantom</span>
 								</a>
+							-->
 
 							<!-- Nav -->
 								<nav>
@@ -40,21 +42,160 @@
 						<h2>Menu</h2>
 						<ul>
 							<li><a href="index.html">Home</a></li>
-							<li><a href="generic.html">Ipsum veroeros</a></li>
-							<li><a href="generic.html">Tempus etiam</a></li>
-							<li><a href="generic.html">Consequat dolor</a></li>
-							<li><a href="elements.html">Elements</a></li>
+							<li><a href="AboutMe.html">About Me</a></li>
+							<li><a href="Project1.html">Project 1 - Physics Research Project</a></li>
+							<li><a href="Project2.html">Project 2 - Algorithmic Trading Robot</a></li>
+							<li><a href="Project3.html">Project 3 - Nutritional Explorer Dashboard</a></li>
 						</ul>
 					</nav>
 
 				<!-- Main -->
-					<div id="main">
+					<div id="main" style="text-align:justify;">
 						<div class="inner">
-							<h1>Generic Page</h1>
-							<span class="image main"><img src="images/pic13.jpg" alt="" /></span>
-							<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel venenatis mauris vehicula hendrerit.</p>
-							<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+							<h1>
+								<span class="image right"><img src="images/AlpacaBroker.png" alt="Alpaca Broker" /></span>
+								Algorithmic Trading Robot
+							</h1>
+							<p>
+								Having explored and flirted with the world of finance and investment and searching for a new programming challenge, I decided to embark on the construction 
+								of an autonomous Algorithmic Trading Robot. Below, you may find a summary of the whole project: the problem statement and context, how the analysis was 
+								performed, necessary and developed digital competencies and a sample of the results. For a more in depth description and viewing of the code snippets, see the 
+								dedicated <a href="https://github.com/Lucas-vdH/AlgoTrading-Robot" target="_blank">github repository</a>.
+							</p>
+							<h2>Architecture of the Project</h2>
+							<p>
+								Before starting the build the program, I layed out the schematics of how it should operate. The algorithm itself would be written in python and should perform a 
+								series of actions at a certain frequency in the following order: load the financial market's history, analyze the data, trigger a buy or sell signal based on some 
+								defined trading strategy and place an order at an online broker. I chose Alpaca for its ease of use and well documented API.
+							</p>
+							<p>
+								The second stage of the project would deal with the deployment of the program. While a cloud based solution or use of a Raspberry Pi were the ideal solutions, I 
+								decided to host the robot on my own laptop, a MacBook High Sierra 10.13.6. The risks and downsided of this solutions are discussed in the last section. To make 
+								this local solution work, I needed a bash script to continuously run in the background, tasked with detecting if the current time is within the open market time 
+								and, if this is the case, running the python script containing the trading algorithm. Additionally, since the goal is for this robot to be completely autonomous, 
+								the computer should be awake for the whole duration of the open market time and run the bash script without any user login or input from my side.
+							</p>
+							<p>
+								Lastly, I wanted to implement some additional features such as recording a history of my portfolio's performance, a backtesting function, sending an 
+								email with the results every month, a market study function, optimal parameters grid search function and more.
+							</p>
+								
+							<div style="display:flex;">
+								<div style="width:60%;margin-right:5%">
+									<h2>Project Build</h2>
+									<h3>The Algorithm, Python</h3>
+									<ol style="margin-bottom:2%">
+										<li>
+											Choose a few assets from the market to follow, interval time at which to check and perform actions, trading strategy and values for the parameters of 
+											the strategy. These choices can be arbitrary or based upon an analysis, which is the method used and considered further below. The downside of choosing 
+											a large number of assets is computation time. Each asset may take between a few seconds to a minute to run through the algorithm. If the strategy is of
+										    high frequency or short interval time, the signals may be generated late if the amount of assets to follow is too high. Too few assets, on the contrary, 
+											will have a very low diversity and the associated risks for your portfolio.
+										</li>
+										<li>Define the buy and sell conditions based on the historical closing prices of an asset. This constitutes a trading strategy.</li>
+										<li>Load the chosen assets' historical closing price for the chosen interval.</li>
+										<li>Analyze the asset's data and generate sell or buy signals, if applicable, in accordance to a predefined strategy.</li>
+										<li>Connect to the online broker through its API and place the trade orders when a signal is triggered.</li>
+									</ol>
+									<p>Steps two to five are written as functions, making the algorithm highly customizable and easy to define new or modify strategies.</p>
+									<h3>Local Hosting, Bash</h3>
+									<p>There are two bash scripts for this project. Both are continuously run in LaunchDaemons and sudo permissions are given to some commands in the sudoers file.</p>
+									<h4>Bash Script 1</h4>
+									<ol style="margin-bottom:2%;">
+										<li>
+											Check current time and perform some action depending on it: 
+											<ul>
+												<li>if it is in the vecinity of market opening time, disable sleep,</li>
+												<li>if it is in the vecinity of right after market closing time, enable sleep again,</li>
+												<li>if it is within market time, run the python script containing the trading algorithm and</li>
+												<li>if it is outside of market time, go to sleep to save computer power.</li>
+											</ul>
+										</li>
+									</ol>
+									<h4>Bash Script 2</h4>
+									<ol style="margin-bottom:2%;">
+										<li>
+											Check current time. If it is within the vecinity of the computer automatic wake up time: retrieve the process identifier (PID) of the Bash Script 1 sleep process 
+											and kill it. This is important so Bash Script 1 activates, disables sleep and is ready for market opening. Otherwise it probably will miss the sleep disabling 
+											window, which is the few seconds the computer is awake before falling asleep again.
+										</li>
+									</ol>
+									<h3>Additional Features, Python</h4>
+									<ol style="margin-bottom:2%;">
+										<li>Backtesting function. Used to test a strategy on a specific asset with all the parameters of the algorithm as input arguments. Returns the performance of the strategy for the given parameter values.</li>
+										<li>
+											Market study function. Uses the backtesting function to run through a large amount of assets belonging to 14 financial sectors to gain a better understanding of 
+											the strategy's perfomance and sector influence. This function is used every two months to select the best performing assets from the best performing sectors. This 
+											selection is then used as the list of assets to follow.
+										</li>
+										<li>
+											Parameter study function. Uses the backtesting function and the assets of the S&P500 to perform a grid search and store the best performing values for the parameters of the 
+											strategy. In practice, this function was not put into place, because it did not prove to have significant changes over my educated estimation of the best parameters and, 
+											more importantly, it took an incredibly long time to compute.
+										</li>
+										<li>
+											Portfolio and performance tracking functions. Periodically record and store the portfolio's value, which is then used to compute its historical performance, taking into account 
+											cash flow corrections. Periodically send myself an email with the results.
+										</li>
+									</ol>
+								</div>
+
+								<div style="width:35%">
+									<h2>Digital Competencies</h2>
+									<p style="margin-bottom:2%">Specifically for the computational aspect, this project required or taught me, among others, good knowledge of,</p>
+									<h3>Python</h3>
+									<ul>
+										<li>Pandas for data management and time series analysis,</li>
+										<li>API interaction,</li>
+										<li>yfinance and other financial modules for accessing the data of an asset</li>
+										<li>datetime and time modules to check the time and set the script to sleep,</li>
+										<li>a consistent, convential and clean coding style with good documentation for ease of read and maintenance,</li>
+										<li>file management to save results and chosen assets,</li>
+										<li>recursive functions and </li>
+										<li>other functionalities, such as checking for a wifi connection, sending emails and logging the actions taken by the algorithm.</li>
+									</ul>
+									<h3>Bash</h3>
+									<ul>
+										<li>Basics of Bash scripting, previously unfamiliar with,</li>
+										<li>logging in a tmp file of the bash scripts actions,</li>
+										<li>other commands like sleep, running a python script, checking time and date, if statements and interaction with the PID of a script.</li>
+									</ul>
+									<h3>Others</h3>
+									<ul>
+										<li>Mac background running scripts, LaunchDaemons and LaunchAgents,</li>
+										<li>sudoers file to grant permission without my input to certain commands in the bash scripts,</li>
+										<li>terminal use,</li>
+										<li>syncronization of multiple scripts interacting with each other and</li>
+										<li>automatization of tasks and actions.</li>
+									</ul>
+								</div>
+							</div>
+							<h2>Results and Conclusions</h2>
+							<p>
+								<span class="image right"><img src="images/AlgoTradingPortfolioPerformance.png" alt="Flux per threshold plot" /></span>
+								After putting everything in place, I started the forward testing, that is, turning the robot on and fully functioning in the real market 
+								but with paper (fake money) to measure the perfomance of the strategy on the real market, rather than its history, and catch any potential 
+								errors in the code or algorithm. On the right you may find the results for the month of November, 2023. A positive return is observed, but this 
+								is likely due to an overall rise in the market rather than the success of the strategy. After all, the implemented strategy is very basic 
+								and meant only to test the algorithm itself. 
+							</p>	
+							<p>
+								Below you may find two plots showing the 60 days backtesting results of two very simple moving average 
+								convergence divergence (MACD) strategies. There, you may observe that some sectors have positive results with very large standard deviations 
+								but that most sectors and assets, slightly above half of the analyzed assets, have negative results. Still, it would be interesting to compute 
+								the area under the curve and find the overall return. Interesting as well is the difference of performance between strategies.
+								<div style="display:flex;">
+									<img src="images/MarketStudyResults.png" alt="Market Study Results" style="width:50%;"/>
+									<img src="images/MarketStudyResults_MACDSignalCross.png" alt="Market Study Results"  style="width:50%;"/>
+
+								</div>
+							</p>
+							<p>
+								Many more ideas for features and implementations were present, but I decided to close the project here and move on to new learning material and projects. Lastly, 
+								it is important to note the risks associated to hosting the robot on the local machine. Mainly, internet connection should be available at all times during 
+								open market time and the laptop has to be connected to a power source, otherwise it will not turn on. To solve the latter issue, a Rasberry Pi could be used, but 
+								even better would be to deploy the algorithm to the cloud.
+							</p>
 						</div>
 					</div>
 
@@ -63,6 +204,7 @@
 						<div class="inner">
 							<section>
 								<h2>Get in touch</h2>
+								<!--
 								<form method="post" action="#">
 									<div class="fields">
 										<div class="field half">
@@ -79,9 +221,33 @@
 										<li><input type="submit" value="Send" class="primary" /></li>
 									</ul>
 								</form>
+								-->
+								<ul class="icons">
+									<li style="margin-bottom:10px">
+										<a href="mailto:vanderhorst.lucas@gmail.com" class="icon solid style1 fa-envelope"><span class="label">Email</span></a>
+										<p style="display:inline">vanderHorst.Lucas@gmail.com</p>
+									</li>
+									<!--
+									<li style="margin-bottom:10px">
+										<strong>Mobile:&ensp;</strong>
+										<p style="display:inline">+31 633244407</p>
+									</li>
+									-->
+								</ul>
 							</section>
 							<section>
-								<h2>Follow</h2>
+								<h2>Socials</h2>
+								<ul style="list-style-type:none;padding:0px;margin:0px">
+									<li style="margin-bottom:10px">
+										<a href="https://www.linkedin.com/in/lucas-vanderhorst" class="icon brands style1 fa-linkedin"><span class="label">LinkedIn</span></a>
+										<a href="https://www.linkedin.com/in/lucas-vanderhorst" target="_blank">&nbsp;LinkedIn Profile</a>
+									</li>
+									<li style="margin-bottom:10px">
+										<a href="https://github.com/Lucas-vdH" class="icon brands style1 fa-github"><span class="label">GitHub</span></a>
+										<a href="https://github.com/Lucas-vdH" target="_blank">&nbsp;GitHub Profile</a>
+									</li>
+								</ul>
+								<!--
 								<ul class="icons">
 									<li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
 									<li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
@@ -92,6 +258,7 @@
 									<li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
 									<li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
 								</ul>
+								-->
 							</section>
 							<ul class="copyright">
 								<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
