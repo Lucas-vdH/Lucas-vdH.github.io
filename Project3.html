@@ -53,45 +53,88 @@
 					<div id="main" style="text-align:justify;">
 						<div class="inner">
 							<h1>
-								<span class="image right"><img src="images/LHCb Detector.png" alt="LHCb Detector" /></span>
+								<span class="image right"><img src="images/PlotlyDashLogo.png" alt="Plotly Dash Logo" /></span>
 								Nutritional Explorer Dashboard
 							</h1>
 							<p>
-								SOME TEXT. Below, you may find a summary of the whole project: the problem statement and context, how the analysis was performed, necessary and developed digital 
+								In the midst of learning Data Science and Machine Learning, something kept vexing me. The projects and applications of these techniques are manifestly fantastic 
+								and I was eager to keep learning and start to build my own projects. However, what good is this if the program runs exclusively on my local machine? I had to learn 
+								how to deploy my applications for anyone to use. Having previously heard and fiddled with Dash, Plotly, I decided to create a simple dashboard including a full data 
+								cycle, from data extraction to deployment. All I needed is a theme. Being a sport science and athlete enthusiast I decided to build a dashboard centered around 
+								nutrition. Below, you may find a summary of the whole project: the problem statement and context, how the build was made, necessary and developed digital 
 								competencies and a sample of the results. For a more in depth description and viewing of the code snippets, see the 
 								dedicated <a href="https://github.com/Lucas-vdH/Nutrition-Explorer-Dashboard" target="_blank">github repository</a>.
 							</p>
-							<h2>Problem Statement</h2>
+							<h2>Problem Statement and Context</h2>
 							<p>
-								SOME TEXT
+								After deciding on the project and theme, I had to define the features and structure the app should have. I wanted the user to be able to chose between three types of 
+								functions. For two of them, the user would input what food items they ate, planned on eating or others and the quantities of the food items. With this information, the first 
+								function of the app would create a sunburst chart showing the total macros consumed as the parent layer and the macro amounts of each food item as the child layer. 
+								The second function would create some bar charts showing the energy, macros, vitamins and minerals consumed, stacking the individual food items. The third function of the 
+								app would be to let the user explore which food items were richest in a certain nutritional attribute, along with some other features like limiting the amount of results, 
+								order them descending or ascending and color the results by another attribute. In this manner, the user could, for example, search for the most proteic foods but containing 
+								the least sugars.
+							</p>
+							<p>
+								For all of these features, I needed a big and trustworthy database containing the food items and their nutritional values. Eventually, I found a database by the FoodData Central, 
+								from the U.S. Department of Agriculture, who provided an API to access the data. If you would like to visit the web page, click <a href="https://fdc.nal.usda.gov/" target="_blank">here</a>. 
+								For the deployment, I choose Google Cloud for the services provided with the free tier. With all of this in hand, I could start building the Dash app.
 							</p>
 								
 							<div style="display:flex;">
 								<div style="width:60%;margin-right:5%">
 									<h2>Project Build</h2>
 									<ol>
-										<li>SOME TEXT</li>
-										<li>SOME TEXT</li>
+										<li>Access and store through a loop the json data obtained from a GET request, following the API instructions from the documentation.</li>
+										<li>Retrieve the relevant data and convert it into a pandas dataframe.</li>
+										<li>Remove all the unnecessary or redundant data. Remove food items containing mostly missing values. Transform dataframe into the desired format for later plotting. Store the dataframe as a csv file.</li>
+										<li>Build a table containing the csv file data in Google Cloud MySQL. Since the app was to be publicly accessible, it should connect with the data through the cloud and not my local machine.</li>
+										<li>
+											Start the build of the Dash app itself.
+											<ol>
+												<li>Load the data from the cloud SQL database.</li>
+												<li>Set the layout and structure of the app. This includes all the visual and interactive elements (buttons, dropdowns, textareas, numerical input areas, etc.).</li>
+												<li>Define all the callback functions. These give all the functionality to the interactive elements of the layout.</li>
+												<li>In one of the callback functions, create all three kinds of visualizations.</li>
+												<li>In another callback function, allow user to provide some feedback or message, which is stored in another SQL table.</li>
+											</ol>
+										</li>
+										<li>Deploy on the cloud using Google Cloud Run. For this, a requirements.txt and Dockerfile files are required.</li>
 									</ol>
 								</div>
 
 								<div style="width:35%">
 									<h2>Digital Competencies</h2>
-									<p style="margin-bottom:2%">Specifically for the computational aspect, this project required or taught me, among others, good Python knowledge of,</p>
+									<p style="margin-bottom:2%">Specifically for the computational aspect, this project required or taught me, among others, good knowledge of,</p>
+									<h3>Python</h3>
 									<ul>
-										<li>SOME TEXT</li>
-										<li>SOME TEXT</li>
-										<li>SOME TEXT</li>
+										<li>Pandas for advanced dataframe manipulation,</li>
+										<li>Plotly for highly interactive and customizable visualizations and</li>
+										<li>Dash for web app building, including the layout of the app and all of the interactivity.</li>
+									</ul>
+									<h3>Google Cloud and SQL</h3>
+									<ul>
+										<li>General Google Cloud commands, functioning and provided services,</li>
+										<li>Google Cloud MySQL database creation of instances and functioning,</li>
+										<li>Google Cloud Run deployment of services,</li>
+										<li>creation and filling of an SQL table and</li>
+										<li>general manipulation of SQL tables and converting into a dataframe.</li>
 									</ul>
 								</div>
 							</div>
 							<h2>Results and Conclusions</h2>
 							<p>
-								<span class="image right"><img src="images/Flux per threshold plot, dissimilar.png" alt="Flux per threshold plot" /></span>
-								SOME TEXT
+								<span class="image right"><img src="images/Dash-NutritionalExplorer.png" alt="Dash Nutrional Explorer" /></span>
+								After deploying the app on Google Cloud, a working link was given to me that anyone could use. Unfortunately, the free triall expired and the link is no longer 
+								available. Nonetheless, the app still works on my local machine and you may find all three visualizations and layout in this section. On the right is 
+     								a bar chart showing the 200 most proteic food items, colored by their energy density. Below on the left, some buttons are used to add or remove food elements. From the dropdown list you can search and select an item and just below write the amount in grams. The two images on the right of that show the visualizations resulting from selecting "Nutritional values" and "Macros distribution" respectively, at the top left of the app layout. These two graphs are a stacked bar chart and a 
+    								sunburst chart. From here, it is not too hard to add complexity or new functionality to the project; as a result, I am now prepared to build more interesting and advanced applications and deploy them satisfactorily.  
+								<div>
+									<img src="images/Dash-ChosenFoods.png" alt="Dash Chosen Foods" style="width:60%"/>
+								</div>
 								<div style="display:flex;">
-									<img src="images/Fitted parameter heatmap.png" alt="Fitted Parameter Heatmap" style="width:50%"/>
-									<img src="images/Fit type heatmap.png" alt="Fit Type Heatmap" style="width:50%"/>
+									<span class="image fit"><img src="images/Dash-NutritionalAmounts.png" alt="Dash Nutritional Amounts"/></span>
+									<span class="image fit"><img src="images/Dash-NutritionalMacros.png" alt="Dash Nutritional Macros"/></span>
 								</div>
 							</p>
 						</div>
